@@ -1,11 +1,11 @@
 #pragma once
 #include <JuceHeader.h>
 
-class GainAudioProcessor : public juce::AudioProcessor
+class WillyGainAudioProcessor : public juce::AudioProcessor
 {
 public:
-    GainAudioProcessor();
-    ~GainAudioProcessor() override;
+    WillyGainAudioProcessor();
+    ~WillyGainAudioProcessor() override;
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -35,5 +35,5 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GainAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WillyGainAudioProcessor)
 };

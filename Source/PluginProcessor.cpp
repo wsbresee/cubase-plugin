@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-GainAudioProcessor::GainAudioProcessor()
+WillyGainAudioProcessor::WillyGainAudioProcessor()
     : AudioProcessor (BusesProperties()
                         .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
                         .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
@@ -9,9 +9,9 @@ GainAudioProcessor::GainAudioProcessor()
 {
 }
 
-GainAudioProcessor::~GainAudioProcessor() {}
+WillyGainAudioProcessor::~WillyGainAudioProcessor() {}
 
-juce::AudioProcessorValueTreeState::ParameterLayout GainAudioProcessor::createParameterLayout()
+juce::AudioProcessorValueTreeState::ParameterLayout WillyGainAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
@@ -30,32 +30,32 @@ juce::AudioProcessorValueTreeState::ParameterLayout GainAudioProcessor::createPa
 //==============================================================================
 // Boilerplate — every plugin needs these
 
-const juce::String GainAudioProcessor::getName() const { return JucePlugin_Name; }
-bool GainAudioProcessor::acceptsMidi()  const          { return false; }
-bool GainAudioProcessor::producesMidi() const          { return false; }
-bool GainAudioProcessor::isMidiEffect() const          { return false; }
-double GainAudioProcessor::getTailLengthSeconds() const { return 0.0; }
+const juce::String WillyGainAudioProcessor::getName() const { return JucePlugin_Name; }
+bool WillyGainAudioProcessor::acceptsMidi()  const          { return false; }
+bool WillyGainAudioProcessor::producesMidi() const          { return false; }
+bool WillyGainAudioProcessor::isMidiEffect() const          { return false; }
+double WillyGainAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int  GainAudioProcessor::getNumPrograms()                              { return 1; }
-int  GainAudioProcessor::getCurrentProgram()                           { return 0; }
-void GainAudioProcessor::setCurrentProgram (int)                       {}
-const juce::String GainAudioProcessor::getProgramName (int)            { return {}; }
-void GainAudioProcessor::changeProgramName (int, const juce::String&)  {}
+int  WillyGainAudioProcessor::getNumPrograms()                              { return 1; }
+int  WillyGainAudioProcessor::getCurrentProgram()                           { return 0; }
+void WillyGainAudioProcessor::setCurrentProgram (int)                       {}
+const juce::String WillyGainAudioProcessor::getProgramName (int)            { return {}; }
+void WillyGainAudioProcessor::changeProgramName (int, const juce::String&)  {}
 
 //==============================================================================
 
-void GainAudioProcessor::prepareToPlay (double /*sampleRate*/, int /*samplesPerBlock*/)
+void WillyGainAudioProcessor::prepareToPlay (double /*sampleRate*/, int /*samplesPerBlock*/)
 {
     // Nothing to prepare for a simple gain plugin.
     // More complex plugins initialise filters, delay lines, etc. here.
 }
 
-void GainAudioProcessor::releaseResources() {}
+void WillyGainAudioProcessor::releaseResources() {}
 
 //==============================================================================
 // The hot path — called ~every 5–20ms while audio is running
 
-void GainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+void WillyGainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                                        juce::MidiBuffer& /*midiMessages*/)
 {
     juce::ScopedNoDenormals noDenormals; // prevents CPU spikes from denormal floats
@@ -69,24 +69,24 @@ void GainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
 //==============================================================================
 
-bool GainAudioProcessor::hasEditor() const { return true; }
+bool WillyGainAudioProcessor::hasEditor() const { return true; }
 
-juce::AudioProcessorEditor* GainAudioProcessor::createEditor()
+juce::AudioProcessorEditor* WillyGainAudioProcessor::createEditor()
 {
-    return new GainAudioProcessorEditor (*this);
+    return new WillyGainAudioProcessorEditor (*this);
 }
 
 //==============================================================================
 // Preset save/load — serialise the parameter tree to XML
 
-void GainAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void WillyGainAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     auto state = apvts.copyState();
     std::unique_ptr<juce::XmlElement> xml (state.createXml());
     copyXmlToBinary (*xml, destData);
 }
 
-void GainAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void WillyGainAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
     if (xmlState != nullptr && xmlState->hasTagName (apvts.state.getType()))
@@ -98,5 +98,5 @@ void GainAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new GainAudioProcessor();
+    return new WillyGainAudioProcessor();
 }

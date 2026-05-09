@@ -2,17 +2,17 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-class GainAudioProcessorEditor : public juce::AudioProcessorEditor
+class WillyGainAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    explicit GainAudioProcessorEditor (GainAudioProcessor&);
-    ~GainAudioProcessorEditor() override;
+    explicit WillyGainAudioProcessorEditor (WillyGainAudioProcessor&);
+    ~WillyGainAudioProcessorEditor() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    GainAudioProcessor& audioProcessor;
+    WillyGainAudioProcessor& audioProcessor;
 
     juce::Slider gainSlider;
     juce::Label  gainLabel;
@@ -20,5 +20,5 @@ private:
     // Attachment keeps the slider and the APVTS parameter in sync automatically
     juce::AudioProcessorValueTreeState::SliderAttachment gainAttachment;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GainAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WillyGainAudioProcessorEditor)
 };

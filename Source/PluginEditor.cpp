@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
+WillyGainAudioProcessorEditor::WillyGainAudioProcessorEditor (WillyGainAudioProcessor& p)
     : AudioProcessorEditor (&p),
       audioProcessor (p),
       gainAttachment (p.apvts, "gain", gainSlider)  // binds slider <-> parameter
@@ -19,20 +19,20 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     setSize (280, 220);
 }
 
-GainAudioProcessorEditor::~GainAudioProcessorEditor() {}
+WillyGainAudioProcessorEditor::~WillyGainAudioProcessorEditor() {}
 
-void GainAudioProcessorEditor::paint (juce::Graphics& g)
+void WillyGainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // Dark background matching the portfolio's Palenight palette
     g.fillAll (juce::Colour (0xff1a1b26));
 
     g.setColour (juce::Colour (0xffa78bfa)); // violet accent
     g.setFont (juce::FontOptions (20.0f, juce::Font::bold));
-    g.drawFittedText ("GAIN", getLocalBounds().removeFromTop (44),
+    g.drawFittedText ("WillyGain", getLocalBounds().removeFromTop (44),
                       juce::Justification::centred, 1);
 }
 
-void GainAudioProcessorEditor::resized()
+void WillyGainAudioProcessorEditor::resized()
 {
     auto area = getLocalBounds().reduced (20);
     area.removeFromTop (30);          // title space
